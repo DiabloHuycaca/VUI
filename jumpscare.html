@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 Đố Vui Tinh Mắt — Thử Thách Mắt Mèo Kawaii 🐾</title>
+
+  <!-- Google Fonts: Cute rounded fonts & Creepster for troll screen -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Quicksand:wght@500;600;700&family=Creepster&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       PHẦN 1: BONG BÓNG TRANG TRÍ BAY LƠ LỬNG TRÊN NỀN
+       ========================================================================= -->
+  <div class="bg-bubbles" id="bg-bubbles"></div>
+
+  <!-- =========================================================================
+       PHẦN 2: MÀN HÌNH CHÀO DỄ THƯƠNG (CÚ LỪA NGÂY THƠ)
+       ========================================================================= -->
+  <main id="landing">
+    <div class="landing-card">
+      <div class="mascot-hero">🐱🍓✨</div>
+      <h1 class="title">ĐỐ VUI TINH MẮT</h1>
+
+      <div class="badge-bar">
+        <span class="cute-badge">🌸 Thử Thách Mắt Mèo</span>
+        <span class="cute-badge">⭐ Cấp Độ 10/10</span>
+        <span class="cute-badge">🎯 Tinh Mắt Nhận Quà</span>
+      </div>
+
+      <p class="desc">
+        Chào mừng bạn đến với khu vườn mùa hạ của Bé Mèo! Hãy tìm ra các điểm khác biệt nhỏ xíu giữa 2 bức tranh để kiểm tra độ tinh tường nhé! 🐾
+      </p>
+
+      <div class="sound-tip">
+        <span>🎧</span> Bật âm thanh để nghe tiếng chuông "Ting Ting!" siêu dễ thương khi tìm đúng nha! 💕
+      </div>
+
+      <button class="start-btn" onclick="startGame()">
+        ✨ Bắt Đầu Chơi Ngay ✨
+      </button>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       PHẦN 3: GIAO DIỆN GAME TÌM ĐIỂM KHÁC BIỆT (CANVAS MINIGAME)
+       ========================================================================= -->
+  <section id="game">
+    <!-- Thanh trạng thái: Level, số điểm đã tìm, thời gian -->
+    <header class="game-navbar">
+      <div class="nav-level" id="nav-level">
+        <span>🍓</span> Màn 1: Bé Mèo & Vườn Dâu
+      </div>
+      <div class="nav-stats">
+        <div class="nav-stat-item">
+          Đã tìm: <span id="stat-found">0</span> / <span id="stat-total">2</span> ⭐
+        </div>
+        <div class="nav-stat-item nav-timer" id="nav-timer">
+          ⏱️ 00:00
+        </div>
+      </div>
+    </header>
+
+    <!-- Hai khung tranh vẽ Canvas để so sánh -->
+    <div class="puzzle-stage">
+      <div class="canvas-card" id="card-left">
+        <div class="canvas-card-label">🌸 HÌNH GỐC 🌸</div>
+        <canvas id="canvas-left" class="game-canvas" width="380" height="285"></canvas>
+      </div>
+
+      <div class="canvas-card" id="card-right">
+        <div class="canvas-card-label">🔍 HÌNH SO SÁNH (CLICK TÌM ĐIỂM) 🔍</div>
+        <canvas id="canvas-right" class="game-canvas" width="380" height="285"></canvas>
+      </div>
+    </div>
+
+    <!-- Hướng dẫn thân thiện Màn 1 -->
+    <div class="game-banner-tip" id="game-hint">
+      💡 Nhấp chuột vào điểm khác nhau trên bức tranh để đánh dấu nhé!
+    </div>
+
+    <!-- Lời nhắc thôi miên ghé sát mắt ở Màn 2 (Cái bẫy) -->
+    <div class="level2-trap-hint" id="level2-hint">
+      🔎 ĐIỂM ĐẶC BIỆT CỰC NHỎ: Hãy ghé sát mắt lại gần màn hình và nhìn thật kỹ vào các đốm sáng trong bụi cỏ! 👀
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PHẦN 4: POPUP CHÚC MỪNG HOÀN THÀNH MÀN 1
+       ========================================================================= -->
+  <div id="level-modal">
+    <div class="modal-box">
+      <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉🐱🏆</div>
+      <h2>XUẤT SẮC QUÁ!</h2>
+      <p>
+        Bạn đã vượt qua <strong>Màn 1</strong> siêu nhanh!<br>
+        Danh hiệu: <strong>Mắt Mèo Tinh Anh 🌟</strong><br><br>
+        <span style="color: #ff5e7e; font-weight: 700;">Màn 2 (Cực Khó):</span> Chỉ 1% người chơi tinh mắt nhất mới tìm được điểm khác biệt siêu nhỏ!
+      </p>
+      <button class="next-lvl-btn" onclick="startLevel2()">
+        🚀 Tiến Vào Màn 2 (Khó Nhất) ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PHẦN 5: MÀN HÌNH HÙ MA (JUMP SCARE OVERLAY TOÀN MÀN HÌNH)
+       ========================================================================= -->
+  <div id="scare-overlay">
+    <img id="scare-image" src="scare.jpg" alt="SCARE">
+  </div>
+
+  <!-- =========================================================================
+       PHẦN 6: MÀN HÌNH TỔNG KẾT TROLL BẠN BÈ (AFTERMATH)
+       ========================================================================= -->
+  <div id="aftermath">
+    <h2>SỢ HẾT HỒN CHƯA?! 💀</h2>
+    <p class="aftermath-subtitle">Thấy bảo ghé sát mắt là ghé sát thật à? 🤣</p>
+    <p class="aftermath-desc">
+      Đừng giận nhé, đây chỉ là trò đùa thôi! 💕<br>
+      Gửi ngay link này cho bạn bè, người yêu hoặc bạn cùng phòng để troll tiếp nào!
+    </p>
+    <button class="troll-btn" onclick="location.reload()">
+      😈 Troll người khác tiếp (Chơi lại)
+    </button>
+  </div>
+
+  <!-- =========================================================================
+       SCRIPTS: CÁC MODULE JAVASCRIPT ĐƯỢC TÁCH RIÊNG RÕ RÀNG
+       ========================================================================= -->
+  <script src="js/audio.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
